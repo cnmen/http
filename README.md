@@ -40,6 +40,61 @@ uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         HttpManager.Opration.setShowLoger(true); // 是否打印网络请求详情，可参考Okhttp3
     }
 
+###3.BaseActivity初始化操作（implements HttpLoadable, FileLoadable）
+        @Override
+        protected void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            // 初始化Retrofit，可以作为全局变量，方便子类复用
+            RetrofitUtils retrofit = RetrofitUtils.getInstance();
+        }
+
+        @Override
+        public boolean isKeepShowing() {
+            // 是否持续保持Dialog不消失，比如多个请求并发
+            return false;
+        }
+
+        @Override
+        public void showDialogLoading() { // 接口请求Dialog
+            // new Dialog过程自定义，最好将对象名也设为全局变量
+            dialog.show();
+        }
+
+        @Override
+        public void dismissDialogLoading() {
+            if (dialog != null && dialog.isShowing()) dialog.dismiss();
+        }
+
+        @Override
+        public void showProgressDialog() { // 上传下载进度Dialog
+            // new Dialog过程自定义，最好将对象名也设为全局变量
+            dialog.show();
+        }
+
+        @Override
+        public void setDialogTitle(String title) {
+            // 设置Dialog标题，以上两者Dialog都适用
+            if (dialog != null) dialog.setTitle(title);
+        }
+
+        @Override
+        public void setDialogContent(String content) {
+            // 设置Dialog内容摘要，以上两者Dialog都适用
+            if (dialog != null) dialog.setContent(content);
+        }
+
+        @Override
+        public void setDialogMaxProgress(int maxProgress) {
+            // 设置上传下载最大进度
+            if (dialog != null) dialog.setMaxProgress(maxProgress);
+        }
+
+        @Override
+        public void setDialogProgress(int progress) {
+            // 设置上传下载进度
+            if (dialog != null) dialog.setProgress(progress);
+        }
+
 ###普通GET请求：
     public void testGet() {
         Subscription s = HttpHelper.Builder
