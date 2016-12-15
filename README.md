@@ -25,12 +25,12 @@
 
 ###1.AndroidManifest.xml添加权限：
 
-// 访问网络权限<br>
-uses-permission android:name="android.permission.INTERNET"<br>
-// 往sdcard中写入数据的权限<br>
-uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"<br>
-// 在sdcard中创建/删除文件的权限<br>
-uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <!-- 访问网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
 ###2.Application初始化操作
     @Override
