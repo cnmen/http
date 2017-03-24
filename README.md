@@ -4,26 +4,11 @@
 日期：2016-12-13
 
 ##技术包含：Rxjava+Retrofit2+Okhttp3+FastJson
-<strong>框架支持：<br><br>
-<strong>普通GET请求<br>
-<strong>普通POST请求<br>
-<strong>Token失效自动刷新，续发接口<br>
-<strong>嵌套请求（比如第二个接口需要第一个接口的参数）<br>
-<strong>数组集合循环<br>
-<strong>定时操作<br>
-<strong>周期性操作<br>
-<strong>轮询请求<br>
-<strong>多异步请求并发，不按顺序返回接受<br>
-<strong>多异步请求并发，顺序返回接受<br>
-<strong>多异步请求并发，等待所有异步完成再做操作<br>
-<strong>普通上传文件<br>
-<strong>上传文件显示进度<br>
-<strong>多文件上传显示进度<br>
-<strong>普通下载<br>
-<strong>下载文件显示进度<br>
+
 ##Http请求框架用法如下：
 
 ###1.AndroidManifest.xml添加权限：
+
     <!-- 访问网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 往sdcard中写入数据的权限 -->
@@ -32,6 +17,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
 ###2.Application初始化操作
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -40,6 +26,7 @@
     }
 
 ###3.BaseActivity初始化操作（implements HttpLoadable, FileLoadable）
+
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -95,6 +82,7 @@
         }
 
 ###普通GET请求：
+
     public void testGet() {
         Subscription s = HttpHelper.Builder
             .builder(service.getVersion(getVersionParamas()))
@@ -124,6 +112,7 @@
     }
 
 ###普通POST请求：
+
     public void testPost() {
         Subscription s = HttpHelper.Builder
             .builder(service.versionAction(getVersionParamas()))
@@ -153,6 +142,7 @@
     }
 
 ###当某些请求需要携带Token，而Token失效自动刷新再续发原请求：
+
     public void testToken() {
         Subscription s = TokenHelper.Builder
             .builder(service.loginReward(mToken, testUrl1), service.login(testUrl2, "simon@cmonbaby.com", "123456"))
@@ -193,6 +183,7 @@
     }
 
 ###嵌套请求（比如第二个接口需要第一个接口的参数）
+
     public void nesting() {
         Subscription s = NestingHelper.Builder
             .builder(service.login(testUrl2, "simon@cmonbaby.com", "123456"), service.loginReward(mToken, testUrl1))
@@ -233,6 +224,7 @@
     }
 
 ###数组、集合的遍历
+
     public void list() {
         String[] names = {"张三", "李四", "王五", "赵六", "钱七"};
         Observable
@@ -247,6 +239,7 @@
     }
 
 ###定时操作
+
     public void timer() {
         Observable.timer(2, TimeUnit.SECONDS)
             .subscribe(new Observer<Long>() {
@@ -269,6 +262,7 @@
     }
 
 ###周期性操作
+
     public void cycle() {
         Observable.interval(2, TimeUnit.SECONDS)
             .subscribe(new Observer<Long>() {
@@ -291,6 +285,7 @@
     }
 
 ###轮询请求
+
     public void polling() {
         Observable.create(new Observable.OnSubscribe<BaseBean<VersionEntity>>() {
             @Override
@@ -312,6 +307,7 @@
     }
 
 ###多异步请求并发，不按顺序返回接受
+
     public void merge() { // 拼接两个Observable的输出，不保证顺序，按照事件产生的顺序发送给订阅者
         Subscription s = Merge2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
             service.login(testUrl2, "simon@cmonbaby.com", "123456"))
@@ -342,6 +338,7 @@
     }
 
 ### 多异步请求并发，顺序返回接受
+
     public void concat() {
         Subscription s = Concat2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
             service.login(testUrl2, "li_ai@baxter.com", "123456"))
@@ -372,6 +369,7 @@
     }
 
 ###多异步请求并发，等待所有异步完成再做操作
+
     public void zip() {
         Subscription s = Zip2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
             service.login(testUrl2, "simon@cmonbaby.com", "123456"), String.class)
@@ -417,6 +415,7 @@
     }
 
 ###普通上传文件
+
     public void testUpload() {
         String url = "http://www.cmonbaby.com/image";
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -437,6 +436,7 @@
     }
 
 ###上传文件显示进度
+
     public void testUploadProgress() {
         final String url = "http://www.cmonbaby.com/image";
         Subscription s = UploadFile.Builder.upload(VersionService.class, service.uploadFile(null, null, null))
@@ -484,6 +484,7 @@
     }
 
 ###多文件上传显示进度
+
     public void testUploadFiles() {
         final String url = "http://www.cmonbaby.com/images";
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -534,6 +535,7 @@
     }
 
 ###普通下载
+
     public void testDown() {
         String url = "http://www.cmonbaby.com/download/http-2.3.5.apk";
         service.downloadFile(url)
@@ -550,6 +552,7 @@
     }
 
 ###下载文件显示进度
+
     public void testDownProgress() {
         final String url = "http://www.cmonbaby.com/download/http-2.3.5.apk";
         Subscription s = DownloadFile.Builder.download(VersionService.class)
