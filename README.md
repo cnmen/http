@@ -3,27 +3,27 @@
 作者：西门提督<br>
 日期：2016-12-13
 
-技术包含：Rxjava+Retrofit2+Okhttp3+FastJson<br>
-框架支持：<br><br>
-普通GET请求<br>
-普通POST请求<br>
-Token失效自动刷新，续发接口<br>
-嵌套请求（比如第二个接口需要第一个接口的参数）<br>
-数组集合循环<br>
-定时操作<br>
-周期性操作<br>
-轮询请求<br>
-多异步请求并发，不按顺序返回接受<br>
-多异步请求并发，顺序返回接受<br>
-多异步请求并发，等待所有异步完成再做操作<br>
-普通上传文件<br>
-上传文件显示进度<br>
-多文件上传显示进度<br>
-普通下载<br>
-下载文件显示进度<br>
-Http请求框架用法如下：
+## 技术包含：Rxjava+Retrofit2+Okhttp3+FastJson
+#### 框架支持：<br><br>
+#### 普通GET请求<br>
+#### 普通POST请求<br>
+#### Token失效自动刷新，续发接口<br>
+#### 嵌套请求（比如第二个接口需要第一个接口的参数）<br>
+#### 数组集合循环<br>
+#### 定时操作<br>
+#### 周期性操作<br>
+#### 轮询请求<br>
+#### 多异步请求并发，不按顺序返回接受<br>
+#### 多异步请求并发，顺序返回接受<br>
+#### 多异步请求并发，等待所有异步完成再做操作<br>
+#### 普通上传文件<br>
+#### 上传文件显示进度<br>
+#### 多文件上传显示进度<br>
+#### 普通下载<br>
+#### 下载文件显示进度<br>
+## Http请求框架用法如下：
 
-1.AndroidManifest.xml添加权限：
+### 1.AndroidManifest.xml添加权限：
 
     <!-- 访问网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -32,7 +32,7 @@ Http请求框架用法如下：
     <!-- 在sdcard中创建/删除文件的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-###2.Application初始化操作
+### 2.Application初始化操作
 
     @Override
     public void onCreate() {
@@ -41,7 +41,7 @@ Http请求框架用法如下：
         HttpManager.Opration.setShowLoger(true); // 是否打印网络请求详情，可参考Okhttp3
     }
 
-###3.BaseActivity初始化操作（implements HttpLoadable, FileLoadable）
+### 3.BaseActivity初始化操作（implements HttpLoadable, FileLoadable）
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ Http请求框架用法如下：
             if (dialog != null) dialog.setProgress(progress);
         }
 
-###普通GET请求：
+### 普通GET请求：
 
     public void testGet() {
         Subscription s = HttpHelper.Builder
@@ -127,7 +127,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###普通POST请求：
+### 普通POST请求：
 
     public void testPost() {
         Subscription s = HttpHelper.Builder
@@ -157,7 +157,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###当某些请求需要携带Token，而Token失效自动刷新再续发原请求：
+### 当某些请求需要携带Token，而Token失效自动刷新再续发原请求：
 
     public void testToken() {
         Subscription s = TokenHelper.Builder
@@ -198,7 +198,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###嵌套请求（比如第二个接口需要第一个接口的参数）
+### 嵌套请求（比如第二个接口需要第一个接口的参数）
 
     public void nesting() {
         Subscription s = NestingHelper.Builder
@@ -239,7 +239,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###数组、集合的遍历
+### 数组、集合的遍历
 
     public void list() {
         String[] names = {"张三", "李四", "王五", "赵六", "钱七"};
@@ -254,7 +254,7 @@ Http请求框架用法如下：
             });
     }
 
-###定时操作
+### 定时操作
 
     public void timer() {
         Observable.timer(2, TimeUnit.SECONDS)
@@ -277,7 +277,7 @@ Http请求框架用法如下：
             });
     }
 
-###周期性操作
+### 周期性操作
 
     public void cycle() {
         Observable.interval(2, TimeUnit.SECONDS)
@@ -300,7 +300,7 @@ Http请求框架用法如下：
             });
     }
 
-###轮询请求
+### 轮询请求
 
     public void polling() {
         Observable.create(new Observable.OnSubscribe<BaseBean<VersionEntity>>() {
@@ -322,7 +322,7 @@ Http请求框架用法如下：
         });
     }
 
-###多异步请求并发，不按顺序返回接受
+### 多异步请求并发，不按顺序返回接受
 
     public void merge() { // 拼接两个Observable的输出，不保证顺序，按照事件产生的顺序发送给订阅者
         Subscription s = Merge2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
@@ -384,7 +384,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###多异步请求并发，等待所有异步完成再做操作
+### 多异步请求并发，等待所有异步完成再做操作
 
     public void zip() {
         Subscription s = Zip2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
@@ -430,7 +430,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###普通上传文件
+### 普通上传文件
 
     public void testUpload() {
         String url = "http://www.cmonbaby.com/image";
@@ -451,7 +451,7 @@ Http请求框架用法如下：
             });
     }
 
-###上传文件显示进度
+### 上传文件显示进度
 
     public void testUploadProgress() {
         final String url = "http://www.cmonbaby.com/image";
@@ -499,7 +499,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###多文件上传显示进度
+### 多文件上传显示进度
 
     public void testUploadFiles() {
         final String url = "http://www.cmonbaby.com/images";
@@ -550,7 +550,7 @@ Http请求框架用法如下：
         addSubscription(s);
     }
 
-###普通下载
+### 普通下载
 
     public void testDown() {
         String url = "http://www.cmonbaby.com/download/http-2.3.5.apk";
@@ -567,7 +567,7 @@ Http请求框架用法如下：
             });
     }
 
-###下载文件显示进度
+### 下载文件显示进度
 
     public void testDownProgress() {
         final String url = "http://www.cmonbaby.com/download/http-2.3.5.apk";
