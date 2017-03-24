@@ -24,7 +24,6 @@
 ##Http请求框架用法如下：
 
 ###1.AndroidManifest.xml添加权限：
-
     <!-- 访问网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 往sdcard中写入数据的权限 -->
@@ -314,7 +313,8 @@
 
 ###多异步请求并发，不按顺序返回接受
     public void merge() { // 拼接两个Observable的输出，不保证顺序，按照事件产生的顺序发送给订阅者
-        Subscription s = Merge2Helper.Builder.builder(service.versionAction(getVersionParamas()), service.login(testUrl2, "simon@cmonbaby.com", "123456"))
+        Subscription s = Merge2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
+            service.login(testUrl2, "simon@cmonbaby.com", "123456"))
             .loadable(this) // 可不填，请求Dialog实现
             .before(new Action0() { // 非必需实现
                 @Override
@@ -343,7 +343,8 @@
 
 ### 多异步请求并发，顺序返回接受
     public void concat() {
-        Subscription s = Concat2Helper.Builder.builder(service.versionAction(getVersionParamas()), service.login(testUrl2, "li_ai@baxter.com", "123456"))
+        Subscription s = Concat2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
+            service.login(testUrl2, "li_ai@baxter.com", "123456"))
             .loadable(this) // 可不填，请求Dialog实现
             .before(new Action0() { // 非必需实现
                 @Override
@@ -372,7 +373,8 @@
 
 ###多异步请求并发，等待所有异步完成再做操作
     public void zip() {
-        Subscription s = Zip2Helper.Builder.builder(service.versionAction(getVersionParamas()), service.login(testUrl2, "simon@cmonbaby.com", "123456"), String.class)
+        Subscription s = Zip2Helper.Builder.builder(service.versionAction(getVersionParamas()), 
+            service.login(testUrl2, "simon@cmonbaby.com", "123456"), String.class)
             .loadable(this) // 可不填，请求Dialog实现
             .before(new Action0() { // 非必需实现
                 @Override
@@ -495,7 +497,8 @@
             .files(new File(path + "/" + "temp.jpg")) // 测试路径3
             .requestService(new UploadFilesCall<BaseListBean<VersionEntity>, VersionService>() {
                 @Override
-                public Observable<BaseListBean<VersionEntity>> uploadFiles(VersionService service, Map<String, RequestBody> requestBodyMap) {
+                public Observable<BaseListBean<VersionEntity>> uploadFiles(VersionService service, 
+                    Map<String, RequestBody> requestBodyMap) {
                     return service.uploadFiles(url, requestBodyMap, getVersionParamas());
                 }
             })
